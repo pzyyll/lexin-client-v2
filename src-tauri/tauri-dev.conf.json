@@ -1,0 +1,5 @@
+{
+  "productName": "lexin-dev",
+  "identifier": "lexin.pzyyll.top.app.dev",
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json"
+}

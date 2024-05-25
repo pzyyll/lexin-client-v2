@@ -1,0 +1,9 @@
+{
+  "app": {
+    "trayIcon": {
+      "iconPath": "icons/white/icon.ico",
+      "iconAsTemplate": true
+    }
+  },
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json"
+}

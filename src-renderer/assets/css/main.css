@@ -1,0 +1,45 @@
+body {
+  font-family: "Ubuntu", Roboto, sans-serif;
+}
+
+/* html,
+body,
+div,
+textarea,
+input {
+  scrollbar-width: thin;
+} */
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f16b;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #88888881;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #5555556e;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #a9a9a9;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  html,
+  body,
+  div,
+  textarea,
+  input {
+    scrollbar-width: thin;
+  }
+}

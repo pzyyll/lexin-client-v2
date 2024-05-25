@@ -1,0 +1,39 @@
+{
+  "productName": "lexin",
+  "version": "0.1.0",
+  "identifier": "lexin.pzyyll.top.app",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1234",
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm generate"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Lexi Navigator",
+        "width": 800,
+        "height": 600,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "shortDescription": "Lexi Navigator",
+    "longDescription": "Lexi Navigator is a app for Lexi.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json"
+}

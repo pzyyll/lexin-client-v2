@@ -1,0 +1,43 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tauri:dev": "pnpm tauri dev --config src-tauri/tauri-dev.conf.json",
+    "tauri:build": "pnpm tauri build",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
+    "@pinia/nuxt": "^0.5.1",
+    "@tauri-apps/api": "2.0.0-beta.11",
+    "@tauri-apps/plugin-global-shortcut": "2.0.0-beta.3",
+    "@tauri-apps/plugin-shell": "2.0.0-beta.4",
+    "@types/markdown-it": "^14.1.1",
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^14.1.0",
+    "nuxt": "^3.11.2",
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
+  },
+  "packageManager": "pnpm@9.1.1+sha512.14e915759c11f77eac07faba4d019c193ec8637229e62ec99eefb7cf3c3b75c64447882b7c485142451ee3a6b408059cdfb7b7fa0341b975f12d0f7629c71195",
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.1.66",
+    "@nuxt/fonts": "^0.7.0",
+    "@nuxt/ui": "^2.16.0",
+    "@tauri-apps/cli": "2.0.0-beta.17",
+    "@vueuse/core": "^10.9.0",
+    "@vueuse/nuxt": "^10.9.0",
+    "autoprefixer": "^10.4.19",
+    "cheerio": "1.0.0-rc.12",
+    "daisyui": "^4.11.1",
+    "postcss": "^8.4.38",
+    "sass": "^1.77.2",
+    "unplugin-icons": "^0.19.0",
+    "unplugin-vue-components": "^0.27.0"
+  }
+}
