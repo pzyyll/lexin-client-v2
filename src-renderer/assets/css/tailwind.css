@@ -21,21 +21,21 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f16b;
+  background: #eeeeeec0;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #88888881;
+  background: #888888b1;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #5555556e;
+  background: #6e6e6ec0;
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: #a9a9a9;
+  background: #5f5f5f;
 }
 
 @supports not selector(::-webkit-scrollbar) {

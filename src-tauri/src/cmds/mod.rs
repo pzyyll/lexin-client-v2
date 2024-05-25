@@ -21,7 +21,6 @@ async fn open_window(
         router.as_str(),
         tauri::WebviewUrl::App(router.clone().into()),
     )
-    .transparent(true)
     .build()
     .map_err(|e| e.to_string())?;
 

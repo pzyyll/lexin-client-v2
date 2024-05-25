@@ -1,7 +1,7 @@
 {
   "app": {
     "trayIcon": {
-      "iconPath": "icons/white/icon.ico",
+      "iconPath": "icons/black/icon.ico",
       "iconAsTemplate": true
     }
   },
