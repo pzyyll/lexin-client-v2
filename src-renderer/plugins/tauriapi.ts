@@ -1,4 +1,5 @@
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { invoke } from "@tauri-apps/api/core";
 
 export class Tauri {
   async openWindow(url: string, label: string, title: string = "New Window") {
@@ -31,6 +32,11 @@ export class Tauri {
   async openDevLab() {
     console.log("Opening dev lab");
     return await this.openWindow("/devlab", "devlab", "Tauri Dev Lab");
+  }
+
+  async openTranslateWindow() {
+    console.log("Opening translate window");
+    return await invoke("open_translate_window", {});
   }
 }
 

@@ -5,14 +5,8 @@
 //! Author: Lizc
 //! Created Data: 2024-05-27
 //!
-//! Description: Windows module for Tauri.
+//! Description: The consts module for the application.
 
-use tauri::Runtime;
-
-pub mod home;
-pub mod translate;
-pub mod tray;
-
-pub fn setup<R: Runtime>(app: &tauri::AppHandle<R>) {
-    tray::setup(app);
-}
+pub const WIN_LABEL_MAIN: &str = "main";
+pub const WIN_LABEL_TRANSLATE: &str = "translate";
+pub const APP_NAME: &str = "Lexi Navigator";

@@ -9,15 +9,6 @@
     "beforeBuildCommand": "pnpm generate"
   },
   "app": {
-    "windows": [
-      {
-        "title": "Lexi Navigator",
-        "width": 800,
-        "height": 600,
-        "resizable": true,
-        "fullscreen": false
-      }
-    ],
     "security": {
       "csp": null
     }

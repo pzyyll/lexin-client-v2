@@ -10,6 +10,11 @@ async function openPlayground() {
     const webviewWindow = await $tauri.openPlayground();
 }
 
+function openTranslate() {
+    console.log("openTranslate");
+    $tauri.openTranslateWindow();
+}
+
 </script>
 
 <template>
@@ -17,7 +22,8 @@ async function openPlayground() {
     <!-- <MarkdownText Value="# Lab Dashboard" /> -->
     <br />
     <div class="flex flex-row gap-2">
-      <button class="daisy-btn" @click="openPlayground">Playground</button>
+      <button class="du-btn" @click="openPlayground">Playground</button>
+      <button class="du-btn" @click="openTranslate">Translate</button>
     </div>
   </div>
 </template>

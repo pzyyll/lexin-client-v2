@@ -1,7 +1,8 @@
 {
   "app": {
     "trayIcon": {
-      "iconPath": "icons/white/icon.ico"
+      "iconPath": "icons/icon.ico",
+      "tooltip": "Lexi Navigator"
     }
   },
   "$schema": "../node_modules/@tauri-apps/cli/schema.json"

@@ -28,5 +28,9 @@ async fn open_window(
 }
 
 pub fn register_cmds() -> Box<tauri::ipc::InvokeHandler<tauri::Wry>> {
-    Box::new(tauri::generate_handler![test_cmd, open_window])
+    Box::new(tauri::generate_handler![
+        test_cmd,
+        open_window,
+        crate::windows::translate::open_translate_window
+    ])
 }

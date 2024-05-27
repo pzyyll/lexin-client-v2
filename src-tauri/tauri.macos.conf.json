@@ -2,8 +2,10 @@
   "app": {
     "trayIcon": {
       "iconPath": "icons/black/icon.ico",
-      "iconAsTemplate": true
-    }
+      "iconAsTemplate": true,
+      "tooltip": "Lexi Navigator"
+    },
+    "macOSPrivateApi": true
   },
   "$schema": "../node_modules/@tauri-apps/cli/schema.json"
 }

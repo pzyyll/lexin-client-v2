@@ -38,7 +38,7 @@ onUnmounted(() => {
     <icon-mdi-pin-off />
     <icon-mdi-google-translate />
     <icon-svgs-deepl-logo />
-    <button class="daisy-btn"><icon-svgs-deepl-logo /></button>
+    <button class="du-btn"><icon-svgs-deepl-logo /></button>
   </div>
   <UButton loading>Button</UButton>
   <!-- <progress class="progress"></progress> -->
@@ -47,9 +47,9 @@ onUnmounted(() => {
     <div class="basis-1/4 bg-stone-400">02</div>
     <div class="basis-1/2 bg-orange-200">03</div>
   </div>
-  <button class="daisy-btn daisy-btn-square daisy-btn-outline"></button>
+  <button class="du-btn du-btn-square du-btn-outline"></button>
 
-  <div class="daisy-divider">Markdown</div>
+  <div class="du-divider">Markdown</div>
   <UTextarea v-model="markdown" autoresize />
   <Markdown :Content="markdown" />
   <UDivider> ScrollBar </UDivider>

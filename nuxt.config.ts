@@ -19,8 +19,12 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxt/fonts",
     "@nuxt/ui",
-    "@vueuse/nuxt"
+    "@vueuse/nuxt",
+    "@nuxtjs/i18n",
   ],
+  i18n: {
+    vueI18n: "./i18n.config.ts",
+  },
   postcss: {
     plugins: {
       autoprefixer: {},
@@ -77,7 +81,6 @@ export default defineNuxtConfig({
       }),
     ],
   },
-
   devServer: {
     port: 1234,
   },
