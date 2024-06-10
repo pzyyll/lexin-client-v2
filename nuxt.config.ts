@@ -21,14 +21,29 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@vueuse/nuxt",
     "@nuxtjs/i18n",
+    "@formkit/auto-animate/nuxt",
+    "nuxt-headlessui",
+    "nuxt-primevue",
   ],
+  primevue: {
+    components: {
+      prefix: "P",
+    },
+    directives: {
+      prefix: "p-",
+    },
+    composables: {
+      include: ["*", { name: "usePrimeVueToast", use: { as: "useToast" } }],
+    },
+    options: {
+      unstyled: true,
+    },
+  },
   i18n: {
     vueI18n: "./i18n.config.ts",
   },
-  postcss: {
-    plugins: {
-      autoprefixer: {},
-    },
+  headlessui: {
+    prefix: "H",
   },
   vite: {
     // Better support for Tauri CLI output

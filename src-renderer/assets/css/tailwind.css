@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: "Ubuntu", Roboto, sans-serif;
+  font-family: "Fira Sans", -apple-system, ui-sans-serif, "Ubuntu", Roboto, sans-serif;
 }
 
 /* html,
@@ -17,6 +17,7 @@ body {
 /* width */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 /* Track */
@@ -46,4 +47,8 @@ body {
   input {
     scrollbar-width: thin;
   }
+}
+
+.btn-icon {
+  @apply du-btn du-btn-ghost du-btn-circle size-6 min-h-0 min-w-0;
 }

@@ -24,7 +24,7 @@ pub fn show<R: Runtime>(app: &tauri::AppHandle<R>) {
             WebviewWindowBuilder::new(
                 app,
                 consts::WIN_LABEL_MAIN,
-                tauri::WebviewUrl::App("index.html".into()),
+                tauri::WebviewUrl::App("main".into()),
             )
             .resizable(true)
             .fullscreen(false)

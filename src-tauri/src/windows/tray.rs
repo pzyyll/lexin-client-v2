@@ -11,7 +11,7 @@
 
 use crate::consts;
 use tauri::menu::{MenuBuilder, MenuItemBuilder};
-use tauri::{Manager, Runtime};
+use tauri::Runtime;
 
 pub fn setup<R: Runtime>(app: &tauri::AppHandle<R>) {
     let tray_icon = app.tray_by_id("main").expect("tray not found");
@@ -25,21 +25,36 @@ pub fn setup<R: Runtime>(app: &tauri::AppHandle<R>) {
     let _ = tray_icon.set_menu(menu.into());
     tray_icon.on_menu_event(|app, event| {
         if event.id == "exit" {
-            app.state::<crate::core::state::AppState>()
-                .exit_prevent
-                .set(false);
+            // app.state::<crate::core::state::AppState>()
+            //     .exit_prevent
+            //     .set(false);
             app.exit(0);
         }
     });
     // tray_icon.set_show_menu_on_left_click(true).unwrap();
-    tray_icon.on_tray_icon_event(|tray_icon, event| {
-        match event.click_type {
-            tauri::tray::ClickType::Left => {
-                println!("Left click");
-                // show the main windows
-                crate::windows::home::show(tray_icon.app_handle());
+    tray_icon.on_tray_icon_event(
+        |tray_icon, event: tauri::tray::TrayIconEvent| {
+            match event {
+                tauri::tray::TrayIconEvent::Click {
+                    button,
+                    button_state,
+                    ..
+                } => {
+                    if button == tauri::tray::MouseButton::Left
+                        && button_state == tauri::tray::MouseButtonState::Up
+                    {
+                        println!("Left click");
+                        // show the main windows
+                        crate::windows::home::show(tray_icon.app_handle());
+                    }
+                }
+                // tauri::tray::ClickType::Left => {
+                //     println!("Left click");
+                //     // show the main windows
+                //     crate::windows::home::show(tray_icon.app_handle());
+                // }
+                _ => {}
             }
-            _ => {}
-        }
-    });
+        },
+    );
 }
