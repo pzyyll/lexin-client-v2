@@ -13,6 +13,7 @@ const emit = defineEmits<{
       setLoading: () => void;
       play: (src: string) => void;
       isLoading: () => boolean;
+      reset: () => void;
     }
   ];
   onPaused: [];
@@ -21,7 +22,7 @@ const emit = defineEmits<{
 const audio = new Audio();
 const onClick = () => {
   if (status.value === Status.IDLE) {
-    emit("onPlay", { setLoading, play, isLoading });
+    emit("onPlay", { setLoading, play, isLoading, reset });
   } else {
     audio.pause();
     status.value = Status.IDLE;
@@ -50,6 +51,10 @@ const setLoading = () => {
 
 const isLoading = () => {
   return status.value === Status.LOADING;
+};
+
+const reset = () => {
+  status.value = Status.IDLE;
 };
 
 </script>

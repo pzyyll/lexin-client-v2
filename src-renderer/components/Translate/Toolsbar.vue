@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const { $tauri } = useNuxtApp();
 const isOver = defineModel<boolean>();
 
 const el = ref();
@@ -15,7 +15,7 @@ const onMouseOut = () => {
 };
 
 watch(isPin, (value) => {
-  console.log("isPin", value);
+  $tauri.setTranslateWinPin(value);
 });
 </script>
 

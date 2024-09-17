@@ -9,13 +9,11 @@ const props = defineProps<{
 
 const edit = ref<HTMLTextAreaElement>();
 const root = ref<HTMLElement>();
-const { y: rootScrollY } = useScroll(root);
 
 const textSizes = ["text-base", "text-lg", "text-xl", "text-2xl", "text-3xl"];
 const refTextSizeIdx = ref(textSizes.length - 1);
 const rcTextSize = computed(() => textSizes[refTextSizeIdx.value]);
 
-const _refFake = ref<HTMLTextAreaElement>();
 const _divDummy = ref<HTMLTextAreaElement>();
 
 const { $rootFontSize } = useNuxtApp();
@@ -55,20 +53,6 @@ const adjustAutoSize = () => {
     el.style.height = "auto";
     el.style.height = el.scrollHeight + "px";
   });
-};
-
-const getFakeHeight = (size: string, text: string) => {
-  for (let i = 0; i < _refFake.value!.classList.length; i++) {
-    if (textSizes.includes(_refFake.value!.classList[i])) {
-      _refFake.value!.classList.remove(_refFake.value!.classList[i]);
-      break;
-    }
-  }
-  _refFake.value!.className = `${size} ${_refFake.value!.className}`;
-  _refFake.value!.style.height = "auto";
-  _refFake.value!.value = text;
-
-  return _refFake.value!.scrollHeight;
 };
 
 const adjustFontSize = (newValue: string, oldValue: string) => {
@@ -161,6 +145,15 @@ watch(input, async (n, o) => {
   adjustAutoSize();
   nextTick(() => adjustFontSize(newValue, oldValue));
 });
+
+const emit = defineEmits<{
+  onPaste: [e: ClipboardEvent];
+}>();
+
+const onPaste = (e: ClipboardEvent) => {
+  emit("onPaste", e);
+};
+
 onMounted(() => {
   adjustAutoSize();
   if (input.value) {
@@ -183,6 +176,7 @@ defineExpose({
       v-model="input"
       :placeholder="props.placeholder"
       ref="edit"
+      @paste="onPaste"
     >
     </textarea>
     <!-- <textarea class="hidden-element min-h-0" :class="baseClass" ref="_refFake"></textarea> -->

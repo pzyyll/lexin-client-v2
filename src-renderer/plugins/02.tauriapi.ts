@@ -1,8 +1,9 @@
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { getCurrent } from "@tauri-apps/api/window";
+import { getCurrentWindow as getCurrent } from "@tauri-apps/api/window";
 import { invoke } from "@tauri-apps/api/core";
 import { Store } from "@tauri-apps/plugin-store";
 import { listen } from "@tauri-apps/api/event";
+import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 
 export class Tauri {
   store: Store;
@@ -84,12 +85,20 @@ export class Tauri {
     return await listen("cpcp", (event) => {
       console.log("Event received", event);
       const store = useTranslateStore();
-      store.sourceInputFromClipboard = event.payload;
+      store.sourceInputFromClipboard = event.payload as string;
     });
   }
 
   async on_ready() {
     getCurrent().emit("on_ready", {});
+  }
+
+  async copyToClipboard(text: string) {
+    return await writeText(text);
+  }
+
+  async setTranslateWinPin(isPin: boolean) {
+    return await invoke("set_pin", { isPin });
   }
 }
 

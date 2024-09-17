@@ -170,11 +170,37 @@ pub async fn translate_speech(
 }
 
 #[tauri::command]
-pub async fn translate_img_to_text(
+pub async fn translate_img2text(
     state: tauri::State<'_, AppState>,
     api_type: String,
-    img: String,
+    img_bytes: Vec<u8>,
 ) -> Result<serde_json::Value, String> {
-    // todo
-    Ok("".into())
+    // println!("{:?}", img_bytes);
+
+    if let Some(api) = state.settings.get_api(SERVER_API_KEY) {
+        let url = api.url.clone();
+        let token = api.token.clone();
+
+        let form = reqwest::multipart::Form::new().part(
+            "file",
+            reqwest::multipart::Part::bytes(img_bytes).file_name("img.png"),
+        );
+        let res = CLIENT
+            .post(TranslatePath::ImgToText.join_url(&url))
+            .bearer_auth(token)
+            .multipart(form)
+            .send()
+            .await
+            .map_err(|e| e.to_string())?;
+
+        if res.status().is_success() {
+            return res
+                .json::<serde_json::Value>()
+                .await
+                .map_err(|e| e.to_string());
+        }
+        return Err(format!("Error: {:?}", res.text().await));
+    }
+
+    Err("No Image Found".to_string())
 }

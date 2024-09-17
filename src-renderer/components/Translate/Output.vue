@@ -30,8 +30,8 @@ const showText = computed({
 const error = ref<string | null>(null);
 
 const reqTranslateText = (text: string) => {
-  if (!text) return;
-  // console.log("Output:", props.tabInfo?.name, "input", text);
+  if (!text.trim()) return;
+  console.log("reqTranslateText:", props.tabInfo?.name, "input", text);
   isTranslating.value = true;
   const poyload = {
     apiType: props.tabInfo!.api_type,
@@ -44,6 +44,7 @@ const reqTranslateText = (text: string) => {
     .translate_text(poyload)
     .then((result) => {
       console.log("Output: translate result ", result);
+      error.value = null;
       showText.value = result.text[0];
       isTranslating.value = false;
       result.detected_source_language &&

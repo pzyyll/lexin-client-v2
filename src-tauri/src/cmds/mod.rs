@@ -69,11 +69,13 @@ pub fn register_cmds() -> Box<tauri::ipc::InvokeHandler<tauri::Wry>> {
         test_cmd,
         open_window,
         crate::windows::translate::open_translate_window,
+        crate::windows::translate::set_pin,
         resize_window_height,
         settings::get_settings,
         translate::translate_text,
         translate::translate_languages,
         translate::translate_detect,
         translate::translate_speech,
+        translate::translate_img2text
     ])
 }

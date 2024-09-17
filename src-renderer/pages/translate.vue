@@ -2,11 +2,6 @@
 definePageMeta({
   layout: "notstyle",
 });
-import IconGoogle from "~icons/svgs/google-translate-logo";
-import IconDeepL from "~icons/svgs/deepl-logo";
-import IconBaidu from "~icons/svgs/baidu-logo";
-import IconChatGpt from "~icons/svgs/chatgpt-logo.svg";
-
 import { vElementSize } from "@vueuse/components";
 
 const { $media, $tauri } = useNuxtApp();
@@ -46,17 +41,27 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-full" :class="{
-    'relative': snapEdge,
-  }">
-    <Toolsbar v-model="toolsbarIsOver" class="flex-none min-h-1" :class="{
-      'absolute top-0 z-10': (snapEdge && !toolsbarIsOver)
-    }"/>
+  <div
+    class="flex flex-col h-full"
+    :class="{
+      relative: snapEdge,
+    }"
+  >
+    <TranslateToolsbar
+      v-model="toolsbarIsOver"
+      class="flex-none min-h-1"
+      :class="{
+        'absolute top-0 z-10': snapEdge && !toolsbarIsOver,
+      }"
+    />
     <div
       class="flex-1 flex flex-col lg:flex-row lg:pt-1 overflow-y-auto"
-      :class="[snapEdgeStyleClass, {
-        'z-0': snapEdge,
-      }]"
+      :class="[
+        snapEdgeStyleClass,
+        {
+          'z-0': snapEdge,
+        },
+      ]"
       v-element-size="onResize"
       ref="container"
     >
@@ -66,8 +71,14 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
       >
         <TranslateInput class="w-auto h-full p-2 rou" :class="cardSnapEdgeStyleClass" />
       </div>
-      <div v-if="!lg && !snapEdge" class="flex-initial du-divider h-2.5 mt-0 mb-0 px-4"></div>
-      <div v-if="lg" class="flex-initial du-divider du-divider-horizontal mx-0 py-4"></div>
+      <div
+        v-if="!lg && !snapEdge"
+        class="flex-initial du-divider h-2.5 mt-0 mb-0 px-4"
+      ></div>
+      <div
+        v-if="lg"
+        class="flex-initial du-divider du-divider-horizontal mx-0 py-4"
+      ></div>
       <div
         id="translate-output"
         class="bg-transparent flex flex-1 flex-col w-auto h-full lg:max-h-full overflow-y-auto gap-2"

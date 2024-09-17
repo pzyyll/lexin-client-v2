@@ -42,6 +42,10 @@ interface Speech {
   data: any;
 }
 
+interface Img2text {
+  detected_text: string;
+}
+
 export class Translate {
   async translate_text(opt: TextOptions): Promise<TextResult> {
     return await invoke("translate_text", { ...opt });
@@ -65,9 +69,12 @@ export class Translate {
     const result: Speech = await invoke("translate_speech", { ...opt });
     const byteArray = new Uint8Array(result.data);
     const audioBlob = new Blob([byteArray], { type: "audio/mpeg" });
-    // console.log(audioBlob);
-    // console.log(audioUrl);
     return URL.createObjectURL(audioBlob);
+  }
+
+  async translate_img2text(opt: { img: ArrayBuffer }): Promise<Img2text> {
+    const imgBytes = Array.from(new Uint8Array(opt.img));
+    return await invoke("translate_img2text", { apiType: "", imgBytes });
   }
 }
 

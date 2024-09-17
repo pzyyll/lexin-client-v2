@@ -148,7 +148,7 @@ onUnmounted(() => {});
     <p class="p-after-loading">efg</p>
     <h1 class="p-after-loading">abc</h1>
   </div>
-  <PButton label="Submit" class="du-btn" />
+  <!-- <PButton label="Submit" class="du-btn" /> -->
   <div class="du-divider">BaseToolsbar</div>
   <BaseToolsbar>
     <template #center>

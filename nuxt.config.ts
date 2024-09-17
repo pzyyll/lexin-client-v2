@@ -10,9 +10,9 @@ import { FileSystemIconLoader } from "unplugin-icons/loaders";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  nitro: {
-    preset: "static",
-  },
+  // nitro: {
+  //   preset: "static",
+  // },
   srcDir: "src-renderer",
   modules: [
     "unplugin-icons/nuxt",
@@ -23,22 +23,22 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@formkit/auto-animate/nuxt",
     "nuxt-headlessui",
-    "nuxt-primevue",
+    // "nuxt-primevue",
   ],
-  primevue: {
-    components: {
-      prefix: "P",
-    },
-    directives: {
-      prefix: "p-",
-    },
-    composables: {
-      include: ["*", { name: "usePrimeVueToast", use: { as: "useToast" } }],
-    },
-    options: {
-      unstyled: true,
-    },
-  },
+  // primevue: {
+  //   components: {
+  //     prefix: "P",
+  //   },
+  //   directives: {
+  //     prefix: "p-",
+  //   },
+  //   composables: {
+  //     include: ["*", { name: "usePrimeVueToast", use: { as: "useToast" } }],
+  //   },
+  //   options: {
+  //     unstyled: true,
+  //   },
+  // },
   i18n: {
     vueI18n: "./i18n.config.ts",
   },
@@ -46,9 +46,22 @@ export default defineNuxtConfig({
     prefix: "H",
   },
   vite: {
-    // Better support for Tauri CLI output
     build: {
       ssr: false,
+      chunkSizeWarningLimit: 1024,
+      // rollupOptions: {
+      //   output: {
+      //     manualChunks(id) {
+      //       if (id.includes("node_modules/")) {
+      //         const splits = id.toString().split("node_modules/").at(-1)?.split("/");
+      //         console.log(`Chunking ${splits}`);
+      //         const name = splits?.at(0);
+      //         console.log(`Chunking ${name}`);
+      //         return name;
+      //       }
+      //     },
+      //   },
+      // },
     },
     clearScreen: false,
     // Enable environment variables
@@ -102,12 +115,6 @@ export default defineNuxtConfig({
   $development: {
     devtools: {
       enabled: true,
-      openInNewWindow: true,
-    },
-  },
-  $production: {
-    devtools: {
-      enabled: false,
     },
   },
 });

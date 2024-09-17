@@ -3,7 +3,7 @@ import TranslateOutput from "@/components/Translate/Output.vue";
 
 const store = useTranslateStore();
 
-const { $translate } = useNuxtApp();
+const { $translate, $tauri } = useNuxtApp();
 const { selectedTranslateTypes: tabs, selectedTranslateTab } = storeToRefs(store);
 
 const selectedTab = ref(0);
@@ -32,7 +32,19 @@ const onClickPlay = (el: any) => {
     })
     .then((src) => {
       if (el.isLoading()) el.play(src);
+    })
+    .catch((err) => {
+      console.error(err);
+      el.reset();
     });
+};
+
+const onClickCopy = async () => {
+  const curApiType = selectedTranslateTab.value.api_type;
+  const curText = store.getTabShowText(curApiType);
+  if (!curText) return;
+
+  $tauri.copyToClipboard(curText);
 };
 
 onMounted(() => {
@@ -72,17 +84,12 @@ onMounted(() => {
               </HTab>
             </HTabList>
           </template>
-          <template #center>
-            <div class="flex gap-1">
-              <TranslateVolume
-                class="btn-icon"
-                @on-play="onClickPlay"
-                v-if="showVolume"
-              />
-            </div>
-          </template>
           <template #end>
-            <div class="du-btn du-btn-ghost du-btn-circle size-6 min-h-0 min-w-0">
+            <TranslateVolume class="btn-icon" @on-play="onClickPlay" v-if="showVolume" />
+            <div
+              class="du-btn du-btn-ghost du-btn-circle size-6 min-h-0 min-w-0"
+              @click="onClickCopy"
+            >
               <icon-gravity-ui-copy />
             </div>
           </template>

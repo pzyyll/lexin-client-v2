@@ -49,13 +49,19 @@ const onClickPlay = async (element: any) => {
   if (store.sourceInput === "") return;
   const targetlang = store.sourceLanguage || store.sourceDetectLanguage;
   element.setLoading();
-  const src = await $translate.translate_speech({
-    text: store.sourceInput,
-    lang: targetlang,
-  });
-  if (element.isLoading()) element.play(src);
+  $translate
+    .translate_speech({
+      text: store.sourceInput,
+      lang: targetlang,
+    })
+    .then((src) => {
+      if (element.isLoading()) element.play(src);
+    })
+    .catch((err) => {
+      console.error(err);
+      element.reset();
+    });
 };
-
 
 watch(
   () => store.sourceInputFromClipboard,
@@ -64,13 +70,56 @@ watch(
   }
 );
 
+const imgs = ref<string[]>([]);
+const onPaste = (e: ClipboardEvent) => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  if (items.length === 0) return;
+  const item = items[0];
+  if (item.type.startsWith("image")) {
+    console.log("image ", item);
+    const blob = item.getAsFile();
+
+    const src = URL.createObjectURL(blob as Blob);
+    imgs.value.push(src);
+
+    blob?.arrayBuffer().then((buffer) => {
+      console.log("buffer", buffer);
+      $translate
+        .translate_img2text({ img: buffer })
+        .then((res) => {
+          model.value = res.detected_text;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
+
+    // const reader = new FileReader();
+    // reader.onload = (e) => {
+    //   const data = e.target?.result;
+    //   console.log("data", data);
+
+    //   // imgs.value.push(data as string);
+    //   // $translate
+    //   //   .translate_img2text({ img: data as string })
+    //   //   .then((res) => {
+    //   //     console.log("res", res);
+    //   //   })
+    //   //   .catch((err) => {
+    //   //     console.error(err);
+    //   //   });
+    // };
+    // reader.readAsArrayBuffer(blob!);
+  }
+};
+
 onMounted(() => {
   if (store.sourceInputFromClipboard) {
     model.value = store.sourceInputFromClipboard;
     edit_mode.value = false;
   }
 });
-
 </script>
 
 <template>
@@ -79,33 +128,38 @@ onMounted(() => {
       class="du-card-body p-0 max-h-full flex flex-col-reverse lg:flex-col"
       v-auto-animate="{ duration: 200 }"
     >
-      <div class="flex-1 overflow-y-auto" ref="refTextDiv">
-        <TextAutosize
-          v-model="model"
-          placeholder="Input here..."
-          v-if="edit_mode || lg"
-          ref="ref_text"
-          class="min-h-16"
-          :min-rows="lg ? 0 : 4"
-        />
-        <div v-if="!edit_mode && !lg">
-          <p class="truncate">
-            {{ model }}
-          </p>
+      <div class="flex-1 flex overflow-y-auto flex-col relative" ref="refTextDiv">
+        <div
+          v-if="imgs.length"
+          class="flex shrink-0 gap-2 overflow-x-auto sticky top-0 z-10 bg-gray-50"
+        >
+          <img v-for="img in imgs" :src="img" alt="image" class="h-6 w-6 rounded" />
+          <button class="btn-icon" @click="imgs.length = 0">
+            <icon-gravity-ui-square-dashed-text />
+          </button>
+        </div>
+        <div class="flex-none z-0">
+          <TextAutosize
+            v-model="model"
+            placeholder="Input here..."
+            v-if="edit_mode || lg"
+            ref="ref_text"
+            class="min-h-16"
+            :min-rows="lg ? 0 : 4"
+            @on-paste="onPaste"
+          />
+          <div v-if="!edit_mode && !lg">
+            <p class="truncate">
+              {{ model }}
+            </p>
+          </div>
         </div>
       </div>
-      <BaseToolsbar>
+      <BaseToolsbar class="flex-none">
         <template #start>
           <div class="flex-1 flex items-center gap-1">
             <TranslateTypeIcon />
           </div>
-        </template>
-        <template #center>
-          <TranslateVolume
-            class="btn-icon"
-            @on-play="onClickPlay"
-            v-if="store.sourceInput"
-          />
         </template>
         <template #end>
           <div class="flex-none flex flex-row-reverse">
@@ -124,6 +178,11 @@ onMounted(() => {
             <div class="btn-icon" @click="onClickEdit">
               <icon-gravity-ui-pencil-to-square />
             </div>
+            <TranslateVolume
+              class="btn-icon"
+              @on-play="onClickPlay"
+              v-if="store.sourceInput"
+            />
           </div>
         </template>
       </BaseToolsbar>

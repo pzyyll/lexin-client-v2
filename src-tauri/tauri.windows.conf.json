@@ -1,7 +1,7 @@
 {
   "app": {
     "trayIcon": {
-      "iconPath": "icons/icon.ico",
+      "iconPath": "icons/black-bg/icon.ico",
       "tooltip": "Lexi Navigator"
     }
   },

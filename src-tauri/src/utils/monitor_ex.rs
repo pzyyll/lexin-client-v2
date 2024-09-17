@@ -52,12 +52,9 @@ pub fn get_monitor_info_bypoint(
 pub fn to_logical_point(x: f64, y: f64) -> (f64, f64) {
     let hwnd =
         unsafe { windows::Win32::UI::WindowsAndMessaging::GetDesktopWindow() };
-
     let dpi = unsafe { GetDeviceCaps(GetDC(hwnd), LOGPIXELSX) };
-    println!("dpi: {}", dpi);
-
+    // println!("dpi: {}", dpi);
     let scale = dpi as f64 / 96.0f64;
-
     (x / scale, y / scale)
 }
 

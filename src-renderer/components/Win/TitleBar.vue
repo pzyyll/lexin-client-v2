@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getCurrent } from "@tauri-apps/api/window";
+import { getCurrentWindow as getCurrent } from "@tauri-apps/api/window";
 
 let is_maximized = ref(false);
 let is_pin = ref(false);

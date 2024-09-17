@@ -14,6 +14,7 @@ pub const WIN_LABEL_TRANSLATE: &str = "translate";
 pub const APP_NAME: &str = "Lexi Navigator";
 pub const APP_DATA_CONFIG: &str = "settings.json";
 pub const SERVER_API_KEY: &str = "lexinsvr";
+pub const DOUBLE_CLICK_INTERVAL: u32 = 350;
 
 pub enum WindowEvent {
     CPCP,
@@ -25,4 +26,18 @@ impl WindowEvent {
             WindowEvent::CPCP => "cpcp",
         }
     }
+}
+
+#[derive(Eq, Hash, PartialEq)]
+pub enum Shortcut {
+    DoubleCopy,
+    DoubleAlt,
+    AltShift1,
+}
+
+#[derive(Eq, Hash, PartialEq)]
+pub enum MouseEvent {
+    LeftDown,
+    LeftUp,
+    Move,
 }

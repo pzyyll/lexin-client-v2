@@ -53,6 +53,13 @@ fn app_setup<R: Runtime>(
                 }
             }
         })?;
+
+        gs.on_shortcut("Alt+Shift+1", |_app, _shortcut, event| {
+            if let ShortcutState::Pressed = event.state {
+                println!("Alt+Shift+1 pressed");
+                plugin::keyevent::get_focus_edit_text();
+            }
+        })?;
     }
     let app_state = AppState::build(app.handle());
     app.manage(app_state);
@@ -60,6 +67,11 @@ fn app_setup<R: Runtime>(
     let apphandle = Arc::new(app.handle().clone());
     plugin::keyevent::register_copy_copy(move || {
         windows::translate::try_show_on_cpcp(&apphandle);
+    });
+    let apphandle = Arc::new(app.handle().clone());
+    plugin::keyevent::register_double_alt(move || {
+        // println!("double alt pressed");
+        let _ = windows::translate::show(&apphandle, None::<fn(_)>);
     });
     Ok(())
 }
@@ -80,6 +92,7 @@ pub fn run() {
                     Target::new(TargetKind::Stdout),
                     Target::new(TargetKind::LogDir { file_name: None }),
                     Target::new(TargetKind::Webview),
+                    Target::new(TargetKind::Stderr),
                 ])
                 .build(),
         )
@@ -97,7 +110,7 @@ pub fn run() {
             }
             tauri::RunEvent::Exit => {
                 println!("exited");
-                plugin::keyevent::unregister_copy_copy();
+                plugin::keyevent::clear();
             }
             tauri::RunEvent::WindowEvent { label, event, .. } => {
                 // println!("window event: {} {:?}", label, event);
